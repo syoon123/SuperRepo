@@ -112,6 +112,11 @@ public class SuperArray{
     }
 
     public boolean isSorted() {
+	for (int i=0; i<_size-1; i++) {
+	    if (_data[i].compareTo(_data[i+1])>0) {
+		return false;
+	    }
+	}
 	return true;
     }
     
@@ -125,12 +130,12 @@ public class SuperArray{
 	Rational r1 = new Rational(39,2);
 	Rational r2 = new Rational(35,2);
 	Rational r3 = new Rational(38,2);
-	a.add(b);
-	a.add(h1);
 	a.add(h2);
-	a.add(r1);
 	a.add(r2);
+	a.add(b);
+	a.add(h1);	
 	a.add(r3);
+	a.add(r1);
 	System.out.println(a);
 	System.out.println(a.linSearch(b));
 	System.out.println(a.linSearch(h1));
@@ -138,6 +143,7 @@ public class SuperArray{
 	System.out.println(a.linSearch(r1));
 	System.out.println(a.linSearch(r2));
 	System.out.println(a.linSearch(r3));
+	System.out.println(a.isSorted());
     }//end main
 		
 }//end class

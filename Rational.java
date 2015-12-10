@@ -87,26 +87,32 @@ public class Rational implements Comparable {
 	return Math.abs(p);
     }
 
-    public int compareTo(Object rat) {
-	boolean alias = this == rat;
-	if (!alias) {
-	    if (rat instanceof Rational) {
-		Rational temp = new Rational(this.numer, this.denom);
-		temp.subtract((Rational)rat);
-		if (temp.numer==0) {return 0;}
-		else if (temp.numer < 0) {return -1;}
-		else {return 1;}
+    public int compareTo(Object other) {
+	if (other instanceof Comparable) {
+	    if (other instanceof Binary) {
+		if (this.floatValue() == ((Binary)other).getDecNum()) {return 0;}
+		else if (this.floatValue() > ((Binary)other).getDecNum()) {return 1;}
+	        return -1;
 	    }
-	    else {throw new ClassCastException("\ncompareTo() input not a Rational");}
+	    else if (other instanceof Hexadecimal) {
+		if (this.floatValue() == ((Hexadecimal)other).getDecNum()) {return 0;}
+		else if (this.floatValue() > ((Hexadecimal)other).getDecNum()) {return 1;}
+		return -1;
+	    }	    
+	    else {
+		if (other instanceof Rational) {
+		    if ( this.numer * ((Rational)other).denom == this.denom * ((Rational)other).numer ){return 0;}
+		    else if ( this.numer * ((Rational)other).denom > this.denom * ((Rational)other).numer ){return 1;}
+		    return -1;
+		}
+	    }
 	}
-	else {return 0;}
+	throw new ClassCastException("\ncompareTo() input not comparable\n");
+	//throw new NullPointerException("\ncompareTo() input is null\n");
     }
     
-    public boolean equals(Object rat) {
-	if (rat instanceof Rational) {
-	    return compareTo((Rational)rat) == 0;
-	}
-	else {throw new ClassCastException("\nequals() input not a Rational");}
+    public boolean equals(Object other) {
+	return this == other || this.compareTo(other) == 0;	
     }
 
 

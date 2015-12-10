@@ -30,7 +30,8 @@ public class Binary implements Comparable{
 	_binNum = decToBin(n);
     }
 
-
+    public int getDecNum() {return _decNum;};
+    
     /*=====================================
       overloaded constructor
       pre:  s is String representing non-negative binary number
@@ -144,10 +145,7 @@ public class Binary implements Comparable{
       Object), or if this and other represent equal binary values
       =============================================*/
     public boolean equals( Object other ) { 
-	if (other instanceof Binary) {
-	    return compareTo((Binary)other) == 0;
-	}
-	else {throw new ClassCastException("\nequals() input not a Binary");}
+	return this == other || this.compareTo(other) == 0;
     }
 
 
@@ -158,18 +156,28 @@ public class Binary implements Comparable{
       negative integer if this<input, positive integer otherwise
       =============================================*/
     public int compareTo( Object other ) {
-	if (this != other) {
+	if (other instanceof Comparable) {
 	    if (other instanceof Binary) {
-		if (this._decNum == ((Binary)other)._decNum) {return 0;}
-		else if (this._decNum < ((Binary)other)._decNum) {return -1;}
-		else {return 1;}
+		if (this._decNum == ((Binary)other).getDecNum()) {return 0;}
+		else if (this._decNum > ((Binary)other).getDecNum()) {return 1;}
+		return -1;
 	    }
-	    else {throw new ClassCastException("\ncompareTo() input not a Binary");}
+	    else if (other instanceof Hexadecimal) {
+		if (this._decNum == ((Hexadecimal)other).getDecNum()) {return 0;}
+		else if (this._decNum > ((Hexadecimal)other).getDecNum()) {return 1;}
+		return -1;
+	    }
+	    else {
+		if (other instanceof Rational) {
+		    if (this._decNum == ((Rational)other).floatValue()) {return 0;}
+		    else if (this._decNum > ((Rational)other).floatValue()) {return 1;}
+		    return -1;
+		}
+	    }
 	}
-	else {return 0;}
+	throw new ClassCastException("\ncompareTo() input not comparable\n");
+	//throw new NullPointerException("\ncompareTo() input is null\n");
     }
-
-
     //main method for testing
     public static void main( String[] args ) {
 	

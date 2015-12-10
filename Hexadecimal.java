@@ -35,6 +35,7 @@ public class Hexadecimal implements Comparable{
 	_decNum = hexToDec(n);
     }
 
+    public int getDecNum() {return _decNum;};
     
     //string representation aka toString()
     public String toString() {
@@ -92,25 +93,34 @@ public class Hexadecimal implements Comparable{
 
     
     //checks to see if 2 objects are equivalent
-    public boolean equals( Object val ) {
-	if (val instanceof Hexadecimal) {
-	    return compareTo((Hexadecimal)val) == 0;
-	}
-	else {throw new ClassCastException("\nequals() input not a Hexadecimal");}
+    public boolean equals( Object other ) {
+	return this == other || this.compareTo(other) == 0;
     }
 
     
     //tells which of the 2 hexadecimal objects is greater
     public int compareTo( Object other ) {
-	if (this != other) {
+	if (other instanceof Comparable) {
 	    if (other instanceof Hexadecimal) {
-		if (this._decNum == ((Hexadecimal)other)._decNum) {return 0;}
-		else if (this._decNum < ((Hexadecimal)other)._decNum) {return -1;}
-		else {return 1;}
+		if (this._decNum == ((Hexadecimal)other).getDecNum()) {return 0;}
+		else if (this._decNum > ((Hexadecimal)other).getDecNum()) {return 1;}
+	        return -1;
 	    }
-	    else {throw new ClassCastException("\ncompareTo() input not a Hexadecimal");}
+	    else if (other instanceof Binary) {
+		if (this._decNum == ((Binary)other).getDecNum()) {return 0;}
+		else if (this._decNum > ((Binary)other).getDecNum()) {return 1;}
+	        return -1;
+	    }
+	    else {
+		if (other instanceof Rational) {
+		    if (this._decNum == ((Rational)other).floatValue()) {return 0;}
+		    else if (this._decNum > ((Rational)other).floatValue()) {return 1;}
+		    return -1;
+		}
+	    }
 	}
-	else {return 0;}
+	throw new ClassCastException("\ncompareTo() input not comparable\n");
+	//throw new NullPointerException("\ncompareTo() input is null\n");
     }
 
     
