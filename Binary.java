@@ -3,7 +3,7 @@
    HW43 -- This or That
    2015-12-07 */
 
-public class Binary {
+public class Binary implements Comparable{
 
     private int _decNum;
     private String _binNum;
@@ -144,9 +144,8 @@ public class Binary {
       Object), or if this and other represent equal binary values
       =============================================*/
     public boolean equals( Object other ) { 
-	boolean retVal = this == other;
-	if (!(retVal) && val instanceof Binary) {
-	    return compareTo(other) == 0;
+	if (other instanceof Binary) {
+	    return compareTo((Binary)other) == 0;
 	}
 	else {throw new ClassCastException("\nequals() input not a Binary");}
     }
@@ -159,14 +158,15 @@ public class Binary {
       negative integer if this<input, positive integer otherwise
       =============================================*/
     public int compareTo( Object other ) {
-	if (other instanceof Binary) {
-	    if (this._decNum == ((Binary)other)._decNum) {return 0;}
-	    else if (this._decNum < ((Binary)other)._decNum) {return -1;}
-	    else {return 1;}
+	if (this != other) {
+	    if (other instanceof Binary) {
+		if (this._decNum == ((Binary)other)._decNum) {return 0;}
+		else if (this._decNum < ((Binary)other)._decNum) {return -1;}
+		else {return 1;}
+	    }
+	    else {throw new ClassCastException("\ncompareTo() input not a Binary");}
 	}
-	else {
-	    throw new ClassCastException("\ncompareTo() input not a Binary");
-	}
+	else {return 0;}
     }
 
 
