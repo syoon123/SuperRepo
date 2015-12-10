@@ -145,10 +145,10 @@ public class Binary {
       =============================================*/
     public boolean equals( Object other ) { 
 	boolean retVal = this == other;
-	if (!retVal) {
-	    retVal = other instanceof Binary && (this.compareTo((Binary)other) == 0);
+	if (!(retVal) && val instanceof Binary) {
+	    return compareTo(other) == 0;
 	}
-	return retVal;
+	else {throw new ClassCastException("\nequals() input not a Binary");}
     }
 
 

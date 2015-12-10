@@ -93,7 +93,8 @@ public class Hexadecimal {
     
     //checks to see if 2 objects are equivalent
     public boolean equals( Object val ) {
-	if (val instanceof Hexadecimal) {
+	boolean retVal = this == val;
+	if (!(retVal) && val instanceof Hexadecimal) {
 	    return compareTo(val) == 0;
 	}
 	else {throw new ClassCastException("\nequals() input not a Hexadecimal");}
