@@ -5,7 +5,7 @@ HW42 -- Array of Titanium
 2015-12-04
 *****************************/
 
-public class SuperArray {
+public class SuperArray{
 
     //~~~~~INSTANCE VARS~~~~~
     //underlying container, or "core" of this data structure:
@@ -52,14 +52,14 @@ public class SuperArray {
     }
 		
     //accessor -- return value at specified index
-    public int get( int index ) {
+    public Comparable get( int index ) {
         checkIndex(index);
     	return _data[index];
     }
 		
     //mutator -- set value at index to newVal, 
     //           return old value at index
-    public int set( int index, Comparable newVal ) {
+    public Comparable set( int index, Comparable newVal ) {
         checkIndex(index);
 	Comparable oldVal = _data[index];
 	_data[index] = newVal;
@@ -93,7 +93,7 @@ public class SuperArray {
         for(int i = index; i < _lastPos;i++) {
             _data[i] = _data[i+1];
         }
-        _data[_lastPos] = 0; //make sure all unused data is 0 to make adding stuff easier
+        //_data[_lastPos] = 0; //make sure all unused data is 0 to make adding stuff easier
         _lastPos -= 1;
         _size -= 1;
     }
@@ -101,23 +101,43 @@ public class SuperArray {
     public int size() {
         return _size;
     }
+
+    public int linSearch(Comparable target) {
+	for (int i=0; i<_size; i++) {
+	    if (_data[i] == target) {
+		return i;
+	    }
+	}
+	return -1;
+    }
+
+    public boolean isSorted() {
+	return true;
+    }
+    
     //main method for testing
     public static void main( String[] args ) {
 	//*****INSERT ADEQUATE TEST CALLS HERE*****
-    	ListInt a = new SuperArray();
-	for(int i=0; i<10; i++) {
-	    a.add(i);
-	}
+    	SuperArray  a = new SuperArray();
+	Binary b = new Binary(19);
+	Hexadecimal h1 = new Hexadecimal(19);
+	Hexadecimal h2 = new Hexadecimal(17);
+	Rational r1 = new Rational(39,2);
+	Rational r2 = new Rational(35,2);
+	Rational r3 = new Rational(38,2);
+	a.add(b);
+	a.add(h1);
+	a.add(h2);
+	a.add(r1);
+	a.add(r2);
+	a.add(r3);
 	System.out.println(a);
-	a.add(4, -1);
-	System.out.println(a);
-	a.set(4, 1);
-	System.out.println(a);
-	System.out.println(a.size());
-	a.remove(4);
-	System.out.println(a);
-	System.out.println(a.size());
-	System.out.println(a.get(4));
+	System.out.println(a.linSearch(b));
+	System.out.println(a.linSearch(h1));
+	System.out.println(a.linSearch(h2));
+	System.out.println(a.linSearch(r1));
+	System.out.println(a.linSearch(r2));
+	System.out.println(a.linSearch(r3));
     }//end main
 		
 }//end class

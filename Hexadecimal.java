@@ -5,7 +5,7 @@ HW44 -- This or That or Fourteen Other Things
 2015-12-08
 */
 
-public class Hexadecimal {
+public class Hexadecimal implements Comparable{
 
     //class var
     private static final String ALLHEX = "0123456789ABCDEF";
