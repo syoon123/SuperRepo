@@ -87,45 +87,26 @@ public class Rational implements Comparable {
 	return Math.abs(p);
     }
 
-    // Instead of using LCD to compare, this method simply utilizes floatValue() to compare float values of the rationals.
-    public int compareTo(Object o){
-	return compareTo((Rational) o);
-    }
-    public int compareTo(Rational factor) {
-	//I didn't reduce the Rationals because that would alter them without the user explicitly wanting to alter them
-	
-	//The following is just basic fraction comparison. Multiply by each other's denominators and then compare numerators.
-	//if (!(factor instanceof Rational)) {return -1;}
-	int thisNumer = numer * factor.denom;
-	int thatNumer = factor.numer * denom;
-	
-	if(thisNumer == thatNumer ) {
-	    return 0;r
+    public int compareTo(Object rat) {
+	boolean alias = this == rat;
+	if (!alias) {
+	    if (rat instanceof Rational) {
+		Rational temp = new Rational(this.numer, this.denom);
+		temp.subtract((Rational)rat);
+		if (temp.numer==0) {return 0;}
+		else if (temp.numer < 0) {return -1;}
+		else {return 1;}
+	    }
+	    else {throw new ClassCastException("\ncompareTo() input not a Rational");}
 	}
-	else if(thisNumer > thatNumer) {
-	    return 1;
-	}
-	else {
-	    return -1;
-	}
+	else {return 0;}
     }
     
     public boolean equals(Object rat) {
-	//First check aliasing:
-	boolean retVal = this == rat;
-
-	//Next, if this and input are different objects:
-	if (!retVal) {
-	    
-	    //check if input object is Rational:
-	    retVal = rat instanceof Rational
-
-		//And then use compareTo to check for instance variable equality
-		&& (this.compareTo((Rational)rat) == 0);
+	if (rat instanceof Rational) {
+	    return compareTo((Rational)rat) == 0;
 	}
-	
-	return retVal;
-
+	else {throw new ClassCastException("\nequals() input not a Rational");}
     }
 
 
