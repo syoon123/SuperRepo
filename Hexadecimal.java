@@ -93,9 +93,8 @@ public class Hexadecimal {
     
     //checks to see if 2 objects are equivalent
     public boolean equals( Object val ) {
-	boolean retVal = this == val;
-	if (!(retVal) && val instanceof Hexadecimal) {
-	    return compareTo(val) == 0;
+	if (val instanceof Hexadecimal) {
+	    return compareTo((Hexadecimal)val) == 0;
 	}
 	else {throw new ClassCastException("\nequals() input not a Hexadecimal");}
     }
@@ -103,12 +102,15 @@ public class Hexadecimal {
     
     //tells which of the 2 hexadecimal objects is greater
     public int compareTo( Object other ) {
-	if (other instanceof Hexadecimal) {
+	if (this != other) {
+	    if (other instanceof Hexadecimal) {
 		if (this._decNum == ((Hexadecimal)other)._decNum) {return 0;}
 		else if (this._decNum < ((Hexadecimal)other)._decNum) {return -1;}
 		else {return 1;}
+	    }
+	    else {throw new ClassCastException("\ncompareTo() input not a Hexadecimal");}
 	}
-	else {throw new ClassCastException("\ncompareTo() input not a Hexadecimal");}
+	else {return 0;}
     }
 
     
