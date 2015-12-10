@@ -3,27 +3,13 @@ Team Plebes -- Sarah Yoon, Nick Ng
 APCS1 pd10
 HW42 -- Array of Titanium
 2015-12-04
-
-* class SuperArray --  A wrapper class for an array. 
-* Maintains functionality:
-* access value at index
-* overwrite value at index
-* Adds functionality to std Java array:
-* resizability
-* ability to print meaningfully
-
-PHASE II additions:
-* public void add(int newVal) {} //add item after last item
-* public void add(int index, int newVal) {} //insert item at index, shift existing elements to the right
-* public void remove(int index) {} //remove item at index, shift elements to the left to fill newly empty slot
-* public int size() {} //returns number of menainful elements in _data
 *****************************/
 
-public class SuperArray implements ListInt {
+public class SuperArray {
 
     //~~~~~INSTANCE VARS~~~~~
     //underlying container, or "core" of this data structure:
-    private int[] _data;
+    private Comparable[] _data;
 
     //position of last meaningful value
     private int _lastPos;
@@ -35,7 +21,7 @@ public class SuperArray implements ListInt {
     //~~~~~METHODS~~~~~
     //default constructor – initializes 10-item array
     public SuperArray() {
-    	_data = new int[10];
+    	_data = new Comparable[10];
     	_lastPos = -1;
     	_size = 0;
     }
@@ -52,13 +38,13 @@ public class SuperArray implements ListInt {
     }
     
     //throws an error and stops execution if index too big
-	private void checkIndex(int index) {
+    private void checkIndex(int index) {
 	    if(index > _lastPos) throw new ArrayIndexOutOfBoundsException();
     }	
     
     //double capacity of this SuperArray
     private void expand() {
-    	int[] newArr = new int[_data.length*2];
+    	Comparable[] newArr = new Comparable[_data.length*2];
     	for(int i=0; i<=_lastPos; i++){
     	    newArr[i]=_data[i];
     	}
@@ -73,22 +59,22 @@ public class SuperArray implements ListInt {
 		
     //mutator -- set value at index to newVal, 
     //           return old value at index
-    public int set( int index, int newVal ) {
+    public int set( int index, Comparable newVal ) {
         checkIndex(index);
-	    int oldVal = _data[index];
-	    _data[index] = newVal;
-	    return oldVal;
+	Comparable oldVal = _data[index];
+	_data[index] = newVal;
+	return oldVal;
     }
 
     //adds item after last item
-    public void add(int newVal) {
+    public void add(Comparable newVal) {
         _data[_lastPos+1] = newVal;
 	_lastPos += 1;
 	_size += 1;
     }
     
     //adds item at index, shifts existing elements to the right
-    public void add(int index, int newVal) {
+    public void add(int index, Comparable newVal) {
 	checkIndex(index);
 	if (_size <= _data.length) {
             expand();
